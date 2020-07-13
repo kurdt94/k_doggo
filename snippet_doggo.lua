@@ -1,3 +1,19 @@
+---- LIST OF DOG MODELS:
+--A_C_DogAmericanFoxhound_01		
+--A_C_DogAustralianSheperd_01		
+--A_C_DogBluetickCoonhound_01		
+--A_C_DogCatahoulaCur_01			
+--A_C_DogChesBayRetriever_01		
+--A_C_DogCollie_01		
+--A_C_DogHobo_01			
+--A_C_DogHound_01			
+--A_C_DogHusky_01			
+--A_C_DogLab_01		
+--A_C_DogLion_01	
+--A_C_DogPoodle_01		
+--A_C_DogRufus_01			
+--A_C_DogStreet_01	
+
 function modelrequest( model )
     Citizen.CreateThread(function()
         RequestModel( model )
