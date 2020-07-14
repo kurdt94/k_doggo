@@ -97,6 +97,7 @@ Citizen.CreateThread(function ()
                 DoggoWander()
                 wandering = true
                 resting = false
+                sleeping = false
                 rest_counter = 0
             end
             if not Citizen.InvokeNative(0xAC29253EEF8F0180,player) and not following then
@@ -105,22 +106,23 @@ Citizen.CreateThread(function ()
                 following = true
                 rest_counter = 0
             end
-            if wandering and dist_to_doggo < 1.75 and not resting then
+            if wandering and dist_to_doggo < 1.60 and not resting then
                 TaskStartScenarioInPlace(dog_spawned, GetHashKey('WORLD_ANIMAL_DOG_SITTING'), -1, true, false, false, false)
                 resting = true
+                Wait(8000)
             end
-            if resting then
+            if resting and not sleeping then
                 rest_counter = rest_counter + 1
             end
-            if rest_counter >= 94 and not sleeping then
-                -- chance to go back wandering or start sleeping
+            if rest_counter > 94 and not sleeping then
+                rest_counter = 0
                 local sleep_or_wander = math.random(1,100)
                 if sleep_or_wander > 40 then
                     following = false
                     DoggoWander()
                     wandering = true
                     resting = false
-                    rest_counter = 0
+                    sleeping = false
                     Wait(6000)
                 else
                     TaskStartScenarioInPlace(dog_spawned, GetHashKey('WORLD_ANIMAL_DOG_SLEEPING'), -1, true, false, false, false)
@@ -130,3 +132,16 @@ Citizen.CreateThread(function ()
         end
     end
 end)
+
+-- dogwander
+RegisterCommand("dogwander", function(source, args, rawCommand)
+    if dog_spawned then
+        following = false
+        DoggoWander()
+        wandering = true
+        resting = false
+        rest_counter = 0
+        Wait(6000)
+    end
+end,false)
+
