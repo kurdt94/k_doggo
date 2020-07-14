@@ -21,6 +21,7 @@
 local dog_model = "A_C_DogRufus_01"
 local following_range = 4.0
 local wandering_range = 10.0
+local enable_blip = true
 
 ---- GLOBAL FUNCTIONS
 function modelrequest( model )
@@ -61,6 +62,7 @@ RegisterCommand("doggo", function(source, args, rawCommand)
       Wait(300)
     end
     Citizen.InvokeNative(0x283978A15512B2FE, created_ped, true)
+    if enable_blip then Citizen.InvokeNative(0x23f74c2fda6e7c61, -1749618580, created_ped) end -- blip
     print("new doggo : ".. dog_model .. " | id: ".. created_ped)
     dog_spawned = created_ped
     Citizen.InvokeNative(0x304AE42E357B8C7E, created_ped, PlayerPedId(),6.00,0.0,0.0,-1,-1,following_range,true,true,false,true,true)
@@ -132,16 +134,3 @@ Citizen.CreateThread(function ()
         end
     end
 end)
-
--- dogwander
-RegisterCommand("dogwander", function(source, args, rawCommand)
-    if dog_spawned then
-        following = false
-        DoggoWander()
-        wandering = true
-        resting = false
-        rest_counter = 0
-        Wait(6000)
-    end
-end,false)
-
