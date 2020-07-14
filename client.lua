@@ -22,14 +22,21 @@ local dog_model = "A_C_DogRufus_01"
 local following_range = 4.0
 local wandering_range = 10.0
 
+---- GLOBAL FUNCTIONS
 function modelrequest( model )
     Citizen.CreateThread(function()
         RequestModel( model )
     end)
 end
 
+---- SCRIPT VARS
+local wandering = false
+local resting = false
+local sleeping = false
 local dog_spawned = false
 local last_loc = false
+
+--- DOGGO nil|string [options: delete]
 RegisterCommand("doggo", function(source, args, rawCommand)
     if dog_spawned ~= false then
         SetEntityAsMissionEntity(dog_spawned, true, true)
@@ -60,17 +67,22 @@ RegisterCommand("doggo", function(source, args, rawCommand)
     SetPedAsGroupMember(created_ped, GetPedGroupIndex(PlayerPedId()))
 end, false)
 
+-- wandering native
 function DoggoWander()
     local player = PlayerPedId()
     local coords = GetEntityCoords(player)
     Citizen.InvokeNative(0xE054346CA3A0F315, dog_spawned, coords.x, coords.y, coords.z, wandering_range, tonumber(1077936128), tonumber(1086324736), 1)
 end
 
+--- following native
 function DoggoFollow()
-    Citizen.InvokeNative(0x304AE42E357B8C7E, dog_spawned, PlayerPedId(),6.00,0.0,0.0,-1,-1,following_range,true,true,false,true,true)
+    local random_01 = math.random(2.0,6.0) --6.0
+    local random_02 = math.random(0.0,6.0) --0.0
+    Citizen.InvokeNative(0x304AE42E357B8C7E, dog_spawned, PlayerPedId(), 0.0,random_02,0.0, -1,-1, following_range,true,true,false,true,true)
 end
 
-local wandering = false
+--- main thread
+local rest_counter = 0
 Citizen.CreateThread(function ()
     while true do
         Wait(1000)
@@ -84,11 +96,36 @@ Citizen.CreateThread(function ()
                 following = false
                 DoggoWander()
                 wandering = true
+                resting = false
+                rest_counter = 0
             end
             if not Citizen.InvokeNative(0xAC29253EEF8F0180,player) and not following then
                 wandering = false
                 DoggoFollow()
                 following = true
+                rest_counter = 0
+            end
+            if wandering and dist_to_doggo < 1.75 and not resting then
+                TaskStartScenarioInPlace(dog_spawned, GetHashKey('WORLD_ANIMAL_DOG_SITTING'), -1, true, false, false, false)
+                resting = true
+            end
+            if resting then
+                rest_counter = rest_counter + 1
+            end
+            if rest_counter >= 94 and not sleeping then
+                -- chance to go back wandering or start sleeping
+                local sleep_or_wander = math.random(1,100)
+                if sleep_or_wander > 40 then
+                    following = false
+                    DoggoWander()
+                    wandering = true
+                    resting = false
+                    rest_counter = 0
+                    Wait(6000)
+                else
+                    TaskStartScenarioInPlace(dog_spawned, GetHashKey('WORLD_ANIMAL_DOG_SLEEPING'), -1, true, false, false, false)
+                    sleeping = true
+                end
             end
         end
     end
