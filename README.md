@@ -5,6 +5,7 @@ REDM: Spawn a dog that stays by your side.
 - Sleeps (when you are idle long enough)
 - Wanders around when you stand still
 - Follows you when you move.
+- Helps you with hunting. 
 - Dog is shown as companion(blip) on the map
 
 # installation
@@ -13,6 +14,6 @@ REDM: Spawn a dog that stays by your side.
 -- add " ensure k_doggo " to your server cfg
 
 # usage
--- " doggo ", spawn or respawn your dog
+-- " dog ", spawn or respawn your dog
 
--- " doggo delete ", delete your dog
+-- " dog delete ", delete your dog
