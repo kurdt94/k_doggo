@@ -17,7 +17,7 @@ local doggo = false
 RegisterCommand('dog',function(source,args,rawcommand)
     Citizen.CreateThread(function()
         deleteDog()
-        if args[1] == 'delete' || args[1] == 'del' || args[1] == 'remove' || args[1] == 'rem' then return end
+        if args[1] == 'delete' or args[1] == 'del' or args[1] == 'remove' or args[1] == 'rem' then return end
 
         doggo = newDoggo("A_C_DogRufus_01","Rufus")
 
