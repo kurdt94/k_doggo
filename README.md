@@ -18,9 +18,5 @@ REDM: Spawn a dog that stays by your side.
 
 -- " dog delete ", delete your dog
 
-# latest edit : 2020_07_16
--- Refactor code
-
--- Dog helps while hunting 
-
-( only outside towns, only animals, only animals you kill )
+# latest edit : 
+-- 2020_07_16 : Refactor code
