@@ -50,6 +50,7 @@ function newDoggo(model,name)
             end
             Citizen.InvokeNative(0x283978A15512B2FE, object.id, true) --Mandatory
             SetPedAsGroupMember(object.id, GetPedGroupIndex(PlayerPedId()))
+            SetPedPromptName(object.id, object.name) -- set promptname for ped
             object.pos = GetEntityCoords(object.id)
             object.spawned = true
             -- blip
@@ -138,7 +139,7 @@ function newDoggo(model,name)
             if object.state == "wandering" then
                 local markx = math.random(1,10000)
                 if markx > 9950 then
-                    print("DOG PISSING REACHED")
+                    --print("DOG PISSING REACHED")
                     TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_MARK_TERRITORY_A'), 3000, true, false, false, false)
                     Wait(3000)
                     object.wanderTask()
@@ -158,7 +159,7 @@ function newDoggo(model,name)
 
     function object:getPos()
         --print("getPos")
-        return  object.pos
+        return  GetEntityCoords(object.id)
     end
 
     function object:getModel()
@@ -169,6 +170,7 @@ function newDoggo(model,name)
     function object:setName(name)
         --print("setName")
         object.name = name
+        SetPedPromptName(object.id, object.name)
     end
 
     function object:setState(state)

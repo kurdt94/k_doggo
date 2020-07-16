@@ -8,6 +8,8 @@
 --License: GNU General Public License v3.0
 ------------------------------------------
 Config = {}
+Config.default_name = "Rufus"
+Config.default_model = "A_C_DogRufus_01"
 Config.enable_blip = true
 Config.enable_debugger = false
 
@@ -16,7 +18,8 @@ local doggo = false
 -- Dog [nil|string] delete, del, remove, rem (no args (re)spawns a dog)
 RegisterCommand('dog',function(source,args,rawcommand)
     ---- Default model
-    model = "A_C_DogRufus_01"
+    model = Config.default_model
+    name = Config.default_name
     ---- LIST OF DOG MODELS
     local mList = {
         [1] = "A_C_DogAmericanFoxhound_01",
@@ -39,7 +42,12 @@ RegisterCommand('dog',function(source,args,rawcommand)
         deleteDog()
         if args[1] == 'delete' or args[1] == 'del' or args[1] == 'remove' or args[1] == 'rem' then return end
         if type(tonumber(args[1])) == 'number' and tonumber(args[1]) <= 14 and tonumber(args[1]) >= 1 then model = mList[tonumber(args[1])] end
-        doggo = newDoggo(model,"Rufus")
+
+        if args[2] ~= nil then
+            name = args[2]
+        end
+
+        doggo = newDoggo(model,name)
         while not doggo.id do
             Wait(100)
         end
