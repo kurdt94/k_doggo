@@ -1,5 +1,5 @@
 # k_doggo
-REDM: Spawn a dog that stays by your side.
+REDM: Spawn a dog that stays by your side. Hunts with you.
 
 - Sits next to you
 - Sleeps (when you are idle long enough)
@@ -14,11 +14,11 @@ REDM: Spawn a dog that stays by your side.
 -- add " ensure k_doggo " to your server cfg
 
 # usage
--- " dog ", spawn or respawn your dog
+    " dog ", spawn or respawn your dog
 
--- " dog +number[1-14] ", choose between 1-14 models
+    " dog +number[1-14] ", choose between 1-14 models
 
--- " dog delete | remove | del | rem ", delete your dog without respawn
+    " dog delete | remove | del | rem ", delete your dog without respawn
 
 # latest edit : 
 -- 2020_07_16 : Refactor code
