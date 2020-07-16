@@ -1,6 +1,6 @@
 ------------------------------------------
---Name: K_DOGGO
---URI: https://github.com/kurdt94/k_doggo
+--Name: 
+--URI: 
 --Description: A brief description
 --Version: 1.0
 --Author: kurdt94
@@ -55,7 +55,7 @@ function newDoggo(model,name)
             -- blip
             if Config.enable_blip then Citizen.InvokeNative(0x23f74c2fda6e7c61, -1749618580, object.id) end
             -- follow
-            print("init followTask")
+            --print("init followTask")
             object.followTask()
         end
     end)
@@ -92,7 +92,7 @@ function newDoggo(model,name)
         if dist <= object.player_range and object.state ~= "hunting" and object.state ~= "sleeping" and object.state ~= "resting" and Citizen.InvokeNative(0xAC29253EEF8F0180,player) then
             object.state = "resting"
             TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_SITTING'), -1, true, false, false, false)
-            print("resting state")
+            --print("resting state")
         end
     end
     end)
@@ -106,22 +106,22 @@ function newDoggo(model,name)
         local dist = Vdist(dCoords.x,dCoords.y,dCoords.z,pCoords.x,pCoords.y,pCoords.z)
 
         if Citizen.InvokeNative(0xAC29253EEF8F0180,player) and object.state ~= "wandering" and object.state ~= "hunting" and object.state ~= "resting" and object.state ~= "sleeping" then
-            print("wander task from 1000tick")
+            --print("wander task from 1000tick")
             object.state = "wandering"
             object.isSleeping = false
             object.wanderTask()
         elseif object.state == "resting" and Citizen.InvokeNative(0xAC29253EEF8F0180,player) and object.state ~= "hunting" then
-            print("restingTask from 1000tick")
+            --print("restingTask from 1000tick")
             object.isSleeping = false
             object.restingTask()
         elseif object.state == "hunting" then
-            print("huntingTask from 1000tick")
+            --print("huntingTask from 1000tick")
             object.isSleeping = false
             object.huntingTask()
         elseif object.state == "agro" then
-            print("not implemented!")
+            --print("not implemented!")
         elseif object.state == "playing" then
-            print("not implemented!")
+            --print("not implemented!")
         else
             if not Citizen.InvokeNative(0xAC29253EEF8F0180,player) and object.state ~= "following" and object.state ~= "hunting" then
                 object.isSleeping = false
@@ -141,34 +141,34 @@ function newDoggo(model,name)
     end
 
     function object:getPos()
-        print("getPos")
+        --print("getPos")
         return  object.pos
     end
 
     function object:getModel()
-        print("getModel")
+        --print("getModel")
         return  object.model
     end
 
     function object:setName(name)
-        print("setName")
+        --print("setName")
         object.name = name
     end
 
     function object:setState(state)
-        print("setState")
+        --print("setState")
         object.state = state
     end
 
     function object:followTask()
-        print("followTask called")
+        --print("followTask called")
         object.state = "following"
         Citizen.InvokeNative(0x304AE42E357B8C7E, object.id, PlayerPedId(), 0.0,4.0,0.0, -1,-1, object.following_range,true,true,false,true,true)
     end
 
 
     function object:sleepingTask()
-        print("sleepingTask called")
+        --print("sleepingTask called")
         if not object.isSleeping then
             object.isSleeping = true
             TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_SLEEPING'), -1, true, false, false, false)
@@ -213,7 +213,7 @@ function newDoggo(model,name)
     end
 
     function object:huntingTask()
-        print("huntingTask called")
+        --print("huntingTask called")
         local target = 1000
         local closest = false
         if tablelength(object.huntingList) > 0 then
@@ -231,7 +231,6 @@ function newDoggo(model,name)
         end
 
         if closest then
-            print("here we are. closest found")
             local arrived = false
             Citizen.CreateThread(function ()
                 while not arrived and object.huntingList[closest] ~= 'found' do
@@ -242,14 +241,13 @@ function newDoggo(model,name)
                     local barktime = 7000
                     if dDist < 3 then
                         arrived = true
-                        print("here we are. barking !! ffs")
+                        --print("here we are. barking !")
                         TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_BARKING_UP'),barktime, true, false, false, false)
                         Wait(barktime)
                         object.huntingList[closest] = 'found'
                         object.followTask()
-                        print("barking calling followTask ...")
                     end
-                print("not arrived ...")
+                --print("not arrived ...")
                 end
             end)
 
