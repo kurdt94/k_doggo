@@ -1,5 +1,5 @@
 ------------------------------------------
---Name: k_doggo
+--Name: K_DOGGO
 --URI: https://github.com/kurdt94/k_doggo
 --Description: A brief description
 --Version: 1.0
@@ -131,6 +131,22 @@ function newDoggo(model,name)
     end
     end)
 
+    -- WORLD_ANIMAL_DOG_MARK_TERRITORY_A [[ 0,5 % ]]
+    Citizen.CreateThread(function ()
+        while true do
+            Wait(1000)
+            if object.state == "wandering" then
+                local markx = math.random(1,10000)
+                if markx > 9950 then
+                    print("DOG PISSING REACHED")
+                    TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_MARK_TERRITORY_A'), 3000, true, false, false, false)
+                    Wait(3000)
+                    object.wanderTask()
+                end
+            end
+        end
+    end)
+
     function object:getVolume()
         return  object.volume
     end
@@ -165,7 +181,6 @@ function newDoggo(model,name)
         object.state = "following"
         Citizen.InvokeNative(0x304AE42E357B8C7E, object.id, PlayerPedId(), 0.0,4.0,0.0, -1,-1, object.following_range,true,true,false,true,true)
     end
-
 
     function object:sleepingTask()
         --print("sleepingTask called")
@@ -258,8 +273,7 @@ function newDoggo(model,name)
         end
     end
 
-
-
+    -- Debug Thread
     Citizen.CreateThread(function()
         while Config.enable_debugger do
             Wait(1)
@@ -280,7 +294,7 @@ function newDoggo(model,name)
             DrawText(0.5,0.28,"Ped huntingList: "..tostring(tablelength(object.huntingList)))
             DrawText(0.5,0.30,"Ped itemset: "..tostring(object.itemset))
 
-            local txtpos = 0.30
+            local txtpos = 0.32
             for k,v in pairs(object.huntingList) do
                 txtpos = txtpos + 0.02
                 DrawText(0.5,txtpos,"Ped key=".. k .." "..tostring(v))
