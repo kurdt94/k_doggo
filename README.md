@@ -16,9 +16,9 @@ REDM: Spawn a dog that stays by your side.
 # usage
 -- " dog ", spawn or respawn your dog
 
--- " dog +number ", choose between 1-14 models
+-- " dog +number[1-14] ", choose between 1-14 models
 
--- " dog delete ", delete your dog
+-- " dog delete | remove | del | rem ", delete your dog without respawn
 
 # latest edit : 
 -- 2020_07_16 : Refactor code
