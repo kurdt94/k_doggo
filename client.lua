@@ -15,7 +15,7 @@ local doggo = false
 
 -- Dog [nil|string] delete, del, remove, rem (no args (re)spawns a dog)
 RegisterCommand('dog',function(source,args,rawcommand)
-
+    ---- Default model
     model = "A_C_DogRufus_01"
     ---- LIST OF DOG MODELS
     local mList = {
@@ -38,7 +38,7 @@ RegisterCommand('dog',function(source,args,rawcommand)
     Citizen.CreateThread(function()
         deleteDog()
         if args[1] == 'delete' or args[1] == 'del' or args[1] == 'remove' or args[1] == 'rem' then return end
-        if type(tonumber(args[1])) == 'number' then model = mList[tonumber(args[1])] end
+        if type(tonumber(args[1])) == 'number' and tonumber(args[1]) <= 14 and tonumber(args[1]) >= 1 then model = mList[tonumber(args[1])] end
         doggo = newDoggo(model,"Rufus")
         while not doggo.id do
             Wait(100)
