@@ -176,7 +176,7 @@ function newDoggo(model,name)
     end
 
     function object:wanderTask()
-        print("wanderTask called")
+        --print("wanderTask called")
         local player = PlayerPedId()
         local coords = GetEntityCoords(player)
         Citizen.InvokeNative(0xE054346CA3A0F315, object.id, coords.x, coords.y, coords.z, object.wandering_range, tonumber(1077936128), tonumber(1086324736), 1)
@@ -252,7 +252,7 @@ function newDoggo(model,name)
             end)
 
             if IsEntityDead(closest) and not arrived and object.huntingList[closest] ~= 'found' then
-                print("sending dog to target")
+                --print("sending dog to target")
                 Citizen.InvokeNative(0x6A071245EB0D1882, object.id, closest, -1, 2.4, 2.0, 0, 0) --TASK_GO_TO_ENTITY
             end
         end
