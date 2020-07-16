@@ -1,6 +1,6 @@
 ------------------------------------------
---Name: 
---URI: 
+--Name: K_DOGGO
+--URI: https://github.com/kurdt94/k_doggo
 --Description: A brief description
 --Version: 1.0
 --Author: kurdt94
