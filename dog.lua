@@ -21,7 +21,7 @@ function newDoggo(model,name)
     object.following_range = 4.0
     object.wandering_range = 10.0
     object.smelling_range = 60.0
-    object.player_range = 1.4
+    object.player_range = 1.2
     object.counters = {resting=0,}
     object.huntingList = {}
     object.foundList = {}
@@ -51,6 +51,7 @@ function newDoggo(model,name)
             Citizen.InvokeNative(0x283978A15512B2FE, object.id, true) --Mandatory
             SetPedAsGroupMember(object.id, GetPedGroupIndex(PlayerPedId()))
             SetPedPromptName(object.id, object.name) -- set promptname for ped
+            SetBlockingOfNonTemporaryEvents(object.id,true) -- edit
             object.pos = GetEntityCoords(object.id)
             object.spawned = true
             -- blip
@@ -138,7 +139,7 @@ function newDoggo(model,name)
             Wait(1000)
             if object.state == "wandering" then
                 local markx = math.random(1,10000)
-                if markx > 9950 then
+                if markx > 9975 then
                     --print("DOG PISSING REACHED")
                     TaskStartScenarioInPlace(object.id, GetHashKey('WORLD_ANIMAL_DOG_MARK_TERRITORY_A'), 3000, true, false, false, false)
                     Wait(3000)
@@ -160,6 +161,12 @@ function newDoggo(model,name)
     function object:getPos()
         --print("getPos")
         return  GetEntityCoords(object.id)
+    end
+
+    function object:whistle()
+        Citizen.InvokeNative(0xD6401A1B2F63BED6, PlayerPedId(), 869278708, 1971704925)
+        object.state = "following"
+        Citizen.InvokeNative(0x304AE42E357B8C7E, object.id, PlayerPedId(), 0.0,4.0,0.0, -1,-1, object.following_range,true,true,false,true,true)
     end
 
     function object:getModel()

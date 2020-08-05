@@ -1,8 +1,6 @@
 ------------------------------------------
 --Name: func.lua
 --Description: global functions
---Version: 1.0
---License: GNU General Public License v3.0
 ------------------------------------------
 
 -- [HashKey] model { native: RequestModel }
@@ -12,11 +10,26 @@ function modelrequest(model)
     end)
 end
 
--- [table] table { return lenght of table }
-function tablelength(table)
+-- [table] t { returns lenght of table }
+function tablelength(t)
     local count = 0
-    for _ in pairs(table) do count = count + 1 end
+    for _ in pairs(t) do count = count + 1 end
     return count
+end
+
+-- [table] t, [var] arg { does key exist in table }
+function inTable(t,arg)
+    if (t[arg] == nil) then
+        return arg
+    else
+        return false
+    end
+end
+
+-- [int] num, [int] numDecimalPlaces { round a number to decimal points }
+function round(num, numDecimalPlaces)
+    local mult = 10^(numDecimalPlaces or 0)
+    return math.floor(num * mult + 0.5) / mult
 end
 
 -- [int] x , [int] y, [str] text { draw 2D text on screen }
@@ -46,3 +59,4 @@ end
 function DrawLine(x,y,z,_x,_y,_z,r,g,b,a)
     Citizen.InvokeNative(`DRAW_LINE` & 0xFFFFFFFF, x, y, z, _x, _y, _z, r, g, b, a)
 end
+

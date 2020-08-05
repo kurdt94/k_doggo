@@ -2,7 +2,7 @@
 --Name: k_dog
 --URI: https://github.com/kurdt94
 --Description: spawn a dog with the " dog " command
---Version: 1.1
+--Version: 1.2
 --Author: kurdt94
 --Author URI: https://github.com/kurdt94
 --License: GNU General Public License v3.0
@@ -12,6 +12,8 @@ Config.default_name = "Rufus"
 Config.default_model = "A_C_DogRufus_01"
 Config.enable_blip = true
 Config.enable_debugger = false
+Config.whistle_dog = 0x4AF4D473 -- { Q }
+Config.wait_after_whistle = 10000
 
 local doggo = false
 
@@ -55,6 +57,16 @@ RegisterCommand('dog',function(source,args,rawcommand)
 
 end,false)
 
+Citizen.CreateThread(function ()
+    while true do
+        Citizen.Wait(1)
+        if doggo ~= false and IsControlJustReleased(0, Config.whistle_dog) then
+            doggo.whistle()
+            Wait(Config.wait_after_whistle)
+        end
+
+    end
+end)
 
 function deleteDog()
     if doggo then
