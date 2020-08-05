@@ -28,4 +28,5 @@ REDM: Spawn a dog that stays by your side. Hunts with you.
 
 # latest edits :
 -- 2020_08_06 : fix dog sometimes fleeing away
+
 -- 2020_07_16 : Refactor code
